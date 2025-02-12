@@ -27,10 +27,7 @@ Before you start, ensure you have the following:
 ---
 
 ## 🗺️ Architecture
-
-<p align="center">
-  ![Screenshot 2025-02-12 224814](https://github.com/user-attachments/assets/161946d6-ee1e-4c89-9386-93af0a20d9a9)
-</p>
+![Screenshot 2025-02-12 224814](https://github.com/user-attachments/assets/70f69ec2-970e-4015-be7a-43d518a83c65)
 
 ### 🔄 Workflow:
 The provisioning process follows this sequence:
