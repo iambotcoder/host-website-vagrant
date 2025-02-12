@@ -139,24 +139,28 @@ end
 # 🚀 Setup Instructions
 
 ### 1️⃣ Install Dependencies
+
 Ensure the following are installed:
 
 - [Vagrant](https://www.vagrantup.com/)
 - [VirtualBox](https://www.virtualbox.org/)
 
 ### 2️⃣ Clone the Repository
+
 ```sh
 git clone https://github.com/your-username/vagrant-setup.git
 cd vagrant-setup
 ```
 
 ### 3️⃣ Provision the Virtual Machines
+
 Run the following command to start all VMs:
 ```sh
 vagrant up
 ```
 
 ### 4️⃣ SSH into a Virtual Machine
+
 To access a specific VM, use:
 ```sh
 vagrant ssh <vm-name>
@@ -167,12 +171,14 @@ vagrant ssh web01
 ```
 
 ### 5️⃣ Managing VMs
+
 - **Stop all VMs:** `vagrant halt`
 - **Restart all VMs:** `vagrant reload`
 - **Destroy all VMs:** `vagrant destroy`
 - **List running VMs:** `vagrant status`
 
 ### 📝 Notes
+
 - **Nginx VM (`web01`) requires manual network configuration**:
   1. **First Boot** → Enable `vb.gui = true` in `Vagrantfile`
   2. Set up the network in VirtualBox:
@@ -185,44 +191,54 @@ vagrant ssh web01
 ---
 
 ### **1. MySQL Setup**  
+
 1. Login to the database VM:  
    ```bash
    vagrant ssh db01
    ```
+   
 2. Verify and update `/etc/hosts` if necessary:  
    ```bash
    cat /etc/hosts
    ```
+   
 3. Update OS with latest patches:  
    ```bash
    dnf update -y
    ```
+   
 4. Set repository:  
    ```bash
    dnf install epel-release -y
    ```
+   
 5. Install MariaDB package:  
    ```bash
    dnf install git mariadb-server -y
    ```
+   
 6. Start and enable MariaDB service:  
    ```bash
    systemctl start mariadb
    systemctl enable mariadb
    ```
+   
 7. Run MySQL secure installation script:  
    ```bash
    mysql_secure_installation
    ```
+   
    - Set root password (`admin123`)  
    - Remove anonymous users  
    - Disallow root login remotely (No)  
    - Remove test database  
-   - Reload privilege tables  
+   - Reload privilege tables
+    
 8. Create database and user:  
    ```bash
    mysql -u root -padmin123
    ```
+   
    ```sql
    CREATE DATABASE accounts;
    GRANT ALL PRIVILEGES ON accounts.* TO 'admin'@'localhost' IDENTIFIED BY 'admin123';
@@ -230,6 +246,7 @@ vagrant ssh web01
    FLUSH PRIVILEGES;
    exit;
    ```
+   
 9. Download source code and initialize the database:  
    ```bash
    cd /tmp/
@@ -242,6 +259,7 @@ vagrant ssh web01
    SHOW TABLES;
    exit;
    ```
+   
 10. Restart MariaDB:  
     ```bash
     systemctl restart mariadb
@@ -250,6 +268,7 @@ vagrant ssh web01
 ---
 
 ### **2. Memcache Setup**  
+
 1. Login to the Memcache VM:  
    ```bash
    vagrant ssh mc01
@@ -285,6 +304,7 @@ vagrant ssh web01
 ---
 
 ### **3. RabbitMQ Setup**  
+
 1. Login to the RabbitMQ VM:  
    ```bash
    vagrant ssh rmq01
@@ -322,7 +342,8 @@ vagrant ssh web01
 
 ---
 
-### **4. Tomcat Setup**  
+### **4. Tomcat Setup**
+
 1. Login to the Tomcat VM:  
    ```bash
    vagrant ssh app01
@@ -381,7 +402,8 @@ vagrant ssh web01
     firewall-cmd --reload
     ```
 
-#### **Code Build & Deployment**  
+#### **Code Build & Deployment**
+
 1. Install Maven:  
    ```bash
    cd /tmp/
@@ -415,7 +437,8 @@ vagrant ssh web01
 
 ---
 
-### **5. Nginx Setup**  
+### **5. Nginx Setup**
+
 1. Login to the Nginx VM:  
    ```bash
    vagrant ssh web01
@@ -454,6 +477,7 @@ vagrant ssh web01
 
 
 ## 🗑️ Cleaning Up Resources
+
 To remove all virtual machines and clean up resources, execute:
 ```bash
 $ vagrant destroy --force
@@ -462,6 +486,7 @@ $ vagrant destroy --force
 ---
 
 ## ✅ Conclusion
+
 In this project, we successfully set up a **multi-tier web application** using **Vagrant and VirtualBox**, provisioning various services like MySQL, Memcache, RabbitMQ, Tomcat, and Nginx. The architecture supports scalability and ensures efficient load management.
 
 ---
