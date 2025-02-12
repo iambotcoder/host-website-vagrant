@@ -28,6 +28,10 @@ Before you start, ensure you have the following:
 
 ## 🗺️ Architecture
 
+<p align="center">
+  <img width="703" alt="image" src="https://github.com/user-attachments/assets/5e1933f8-5117-45ea-b7ce-fd9bf6fc0de8" />
+</p>
+
 ### 🔄 Workflow:
 The provisioning process follows this sequence:
 
