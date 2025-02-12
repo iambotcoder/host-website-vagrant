@@ -29,7 +29,7 @@ Before you start, ensure you have the following:
 ## 🗺️ Architecture
 
 <p align="center">
-  <img width="703" alt="image" src="https://github.com/user-attachments/assets/5e1933f8-5117-45ea-b7ce-fd9bf6fc0de8" />
+  ![Screenshot 2025-02-12 224814](https://github.com/user-attachments/assets/161946d6-ee1e-4c89-9386-93af0a20d9a9)
 </p>
 
 ### 🔄 Workflow:
