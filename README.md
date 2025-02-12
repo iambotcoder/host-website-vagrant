@@ -143,10 +143,9 @@ end
 
 ---
 
-### 📖 **README.md**
-Create a **README.md** file with setup instructions:
 
-```md
+
+
 # Vagrant Multi-VM Setup
 
 This project provides a **multi-VM** setup using **Vagrant** and **VirtualBox**. It provisions five virtual machines for different services:
