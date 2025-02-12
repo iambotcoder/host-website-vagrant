@@ -247,11 +247,11 @@ vagrant ssh web01
    ```
    
    ```sql
-   CREATE DATABASE accounts;
-   GRANT ALL PRIVILEGES ON accounts.* TO 'admin'@'localhost' IDENTIFIED BY 'admin123';
-   GRANT ALL PRIVILEGES ON accounts.* TO 'admin'@'%' IDENTIFIED BY 'admin123';
-   FLUSH PRIVILEGES;
-   exit;
+   mysql> CREATE DATABASE accounts;
+   mysql> GRANT ALL PRIVILEGES ON accounts.* TO 'admin'@'localhost' IDENTIFIED BY 'admin123';
+   mysql> GRANT ALL PRIVILEGES ON accounts.* TO 'admin'@'%' IDENTIFIED BY 'admin123';
+   mysql> FLUSH PRIVILEGES;
+   mysql> exit;
    ```
    
 9. Download source code and initialize the database:  
@@ -265,8 +265,8 @@ vagrant ssh web01
    ```
    
    ```sql
-   SHOW TABLES;
-   exit;
+   mysql> SHOW TABLES;
+   mysql> exit;
    ```
    
 10. Restart MariaDB:  
