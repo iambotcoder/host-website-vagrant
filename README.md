@@ -436,13 +436,38 @@ vagrant ssh web01
    chown -R tomcat.tomcat /usr/local/tomcat
    ```
    
+## Setup systemctl command for tomcat   
+
 10. Create Tomcat service file:  
    
     ```bash
     vi /etc/systemd/system/tomcat.service
     ```
    
-    - Add the provided service configuration  
+    - Add the provided service configuration
+      
+    ```ruby
+    
+     [Unit]
+     Description=Tomcat
+     After=network.target
+    
+     [Service]
+     User=tomcat
+     Group=tomcat
+     WorkingDirectory=/usr/local/tomcat
+     Environment=JAVA_HOME=/usr/lib/jvm/jre
+     Environment=CATALINA_PID=/var/tomcat/%i/run/tomcat.pid
+     Environment=CATALINA_HOME=/usr/local/tomcat
+     Environment=CATALINE_BASE=/usr/local/tomcat
+     ExecStart=/usr/local/tomcat/bin/catalina.sh run
+     ExecStop=/usr/local/tomcat/bin/shutdown.sh
+     RestartSec=10
+     Restart=always
+    
+     [Install]
+     WantedBy=multi-user.target
+    ```
    
 11. Reload systemd and enable Tomcat:  
     
@@ -539,15 +564,30 @@ vagrant ssh web01
    vi /etc/nginx/sites-available/vproapp
    ```
    
-   - Add the provided configuration  
-6. Activate Nginx site:  
+   - Add the provided configuration
+
+   ```ruby
+   
+   upstream vproapp {
+     server app01:8080;
+     }
+     server {
+       listen 80;
+       location / {
+         proxy_pass http://vproapp;
+       }
+   }
+ 
+   ```
+   
+7. Activate Nginx site:  
    
    ```bash
    rm -rf /etc/nginx/sites-enabled/default
    ln -s /etc/nginx/sites-available/vproapp /etc/nginx/sites-enabled/vproapp
    ```
    
-7. Restart Nginx:  
+8. Restart Nginx:  
    
    ```bash
    systemctl restart nginx
