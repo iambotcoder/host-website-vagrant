@@ -138,28 +138,28 @@ end
 
 # 🚀 Setup Instructions
 
-### 1️⃣ Install Dependencies
+#### 1️⃣ Install Dependencies
 
 Ensure the following are installed:
 
 - [Vagrant](https://www.vagrantup.com/)
 - [VirtualBox](https://www.virtualbox.org/)
 
-### 2️⃣ Clone the Repository
+#### 2️⃣ Clone the Repository
 
 ```sh
 git clone https://github.com/your-username/vagrant-setup.git
 cd vagrant-setup
 ```
 
-### 3️⃣ Provision the Virtual Machines
+#### 3️⃣ Provision the Virtual Machines
 
 Run the following command to start all VMs:
 ```sh
 vagrant up
 ```
 
-### 4️⃣ SSH into a Virtual Machine
+#### 4️⃣ SSH into a Virtual Machine
 
 To access a specific VM, use:
 ```sh
@@ -170,7 +170,7 @@ For example:
 vagrant ssh web01
 ```
 
-### 5️⃣ Managing VMs
+#### 5️⃣ Managing VMs
 
 - **Stop all VMs:** `vagrant halt`
 - **Restart all VMs:** `vagrant reload`
