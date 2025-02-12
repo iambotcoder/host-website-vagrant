@@ -191,7 +191,7 @@ vagrant ssh web01
 
 ---
 
-### **1. MySQL Setup**  
+## **1. MySQL Setup**  
 
 1. Login to the database VM:  
    ```bash
@@ -278,7 +278,7 @@ vagrant ssh web01
 
 ---
 
-### **2. Memcache Setup**  
+## **2. Memcache Setup**  
 
 1. Login to the Memcache VM:  
    
@@ -326,7 +326,7 @@ vagrant ssh web01
 
 ---
 
-### **3. RabbitMQ Setup**  
+## **3. RabbitMQ Setup**  
 
 1. Login to the RabbitMQ VM:  
    
@@ -378,7 +378,7 @@ vagrant ssh web01
 
 ---
 
-### **4. Tomcat Setup**
+## **4. Tomcat Setup**
 
 1. Login to the Tomcat VM:  
    
@@ -531,7 +531,7 @@ vagrant ssh web01
 
 ---
 
-### **5. Nginx Setup**
+## **5. Nginx Setup**
 
 1. Login to the Nginx VM:  
    
