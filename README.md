@@ -46,14 +46,6 @@ The provisioning process follows this sequence:
 5. **Nginx** (Web Service)
 
 ---
-### 📂 Repository Structure:
-```
-/vagrant-setup
-│── Vagrantfile
-│── README.md
-```
-
----
 
 ### 📜 **Vagrantfile**
 Create a file named **Vagrantfile** and add the following code:
@@ -144,19 +136,7 @@ end
 ---
 
 
-
-
-# Vagrant Multi-VM Setup
-
-This project provides a **multi-VM** setup using **Vagrant** and **VirtualBox**. It provisions five virtual machines for different services:
-
-- **db01** → Database Server (CentOS Stream 9)
-- **mc01** → Memcached Server (CentOS Stream 9)
-- **rmq01** → RabbitMQ Server (CentOS Stream 9)
-- **app01** → Tomcat Application Server (CentOS Stream 9)
-- **web01** → Nginx Web Server (Ubuntu Jammy 64)
-
-## 🚀 Setup Instructions
+# 🚀 Setup Instructions
 
 ### 1️⃣ Install Dependencies
 Ensure the following are installed:
