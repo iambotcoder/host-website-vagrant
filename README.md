@@ -197,33 +197,39 @@ vagrant ssh web01
    vagrant ssh db01
    ```
    
-2. Verify and update `/etc/hosts` if necessary:  
+2. Verify and update `/etc/hosts` if necessary: 
+    
    ```bash
    cat /etc/hosts
    ```
    
 3. Update OS with latest patches:  
+   
    ```bash
    dnf update -y
    ```
    
-4. Set repository:  
+4. Set repository:
+     
    ```bash
    dnf install epel-release -y
    ```
    
 5. Install MariaDB package:  
+   
    ```bash
    dnf install git mariadb-server -y
    ```
    
-6. Start and enable MariaDB service:  
+6. Start and enable MariaDB service: 
+    
    ```bash
    systemctl start mariadb
    systemctl enable mariadb
    ```
    
-7. Run MySQL secure installation script:  
+7. Run MySQL secure installation script:
+     
    ```bash
    mysql_secure_installation
    ```
@@ -234,7 +240,8 @@ vagrant ssh web01
    - Remove test database  
    - Reload privilege tables
     
-8. Create database and user:  
+8. Create database and user:
+     
    ```bash
    mysql -u root -padmin123
    ```
@@ -248,6 +255,7 @@ vagrant ssh web01
    ```
    
 9. Download source code and initialize the database:  
+   
    ```bash
    cd /tmp/
    git clone -b local https://github.com/hkhcoder/vprofile-project.git
@@ -255,12 +263,14 @@ vagrant ssh web01
    mysql -u root -padmin123 accounts < src/main/resources/db_backup.sql
    mysql -u root -padmin123 accounts
    ```
+   
    ```sql
    SHOW TABLES;
    exit;
    ```
    
 10. Restart MariaDB:  
+   
     ```bash
     systemctl restart mariadb
     ```
@@ -270,33 +280,45 @@ vagrant ssh web01
 ### **2. Memcache Setup**  
 
 1. Login to the Memcache VM:  
+   
    ```bash
    vagrant ssh mc01
    ```
+   
 2. Verify and update `/etc/hosts` if necessary:  
+   
    ```bash
    cat /etc/hosts
    ```
+   
 3. Update OS with latest patches:  
+   
    ```bash
    dnf update -y
    ```
+   
 4. Install Memcache:  
+   
    ```bash
    sudo dnf install epel-release -y
    sudo dnf install memcached -y
    ```
+   
 5. Start and enable Memcache service:  
+   
    ```bash
    sudo systemctl start memcached
    sudo systemctl enable memcached
    sudo systemctl status memcached
    ```
-6. Allow external connections:  
+6. Allow external connections:
+     
    ```bash
    sed -i 's/127.0.0.1/0.0.0.0/g' /etc/sysconfig/memcached
    ```
+   
 7. Restart Memcached:  
+   
    ```bash
    sudo systemctl restart memcached
    ```
@@ -306,36 +328,49 @@ vagrant ssh web01
 ### **3. RabbitMQ Setup**  
 
 1. Login to the RabbitMQ VM:  
+   
    ```bash
    vagrant ssh rmq01
    ```
+   
 2. Verify and update `/etc/hosts` if necessary:  
+   
    ```bash
    cat /etc/hosts
    ```
+   
 3. Update OS with latest patches:  
+   
    ```bash
    dnf update -y
    ```
+   
 4. Install EPEL repository:  
+   
    ```bash
    dnf install epel-release -y
    ```
+   
 5. Install dependencies:  
+   
    ```bash
    sudo dnf install wget -y
    dnf -y install centos-release-rabbitmq-38
    dnf --enablerepo=centos-rabbitmq-38 -y install rabbitmq-server
    systemctl enable --now rabbitmq-server
    ```
+   
 6. Configure RabbitMQ user:  
+   
    ```bash
    sudo sh -c 'echo "[{rabbit, [{loopback_users, []}]}]." > /etc/rabbitmq/rabbitmq.config'
    sudo rabbitmqctl add_user test test
    sudo rabbitmqctl set_user_tags test administrator
    sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
    ```
+   
 7. Restart RabbitMQ service:  
+   
    ```bash
    sudo systemctl restart rabbitmq-server
    ```
@@ -345,66 +380,91 @@ vagrant ssh web01
 ### **4. Tomcat Setup**
 
 1. Login to the Tomcat VM:  
+   
    ```bash
    vagrant ssh app01
    ```
+   
 2. Verify and update `/etc/hosts` if necessary:  
+   
    ```bash
    cat /etc/hosts
    ```
+   
 3. Update OS with latest patches:  
+   
    ```bash
    dnf update -y
    ```
+   
 4. Set repository:  
+   
    ```bash
    dnf install epel-release -y
    ```
+   
 5. Install dependencies:  
+   
    ```bash
    dnf -y install java-17-openjdk java-17-openjdk-devel
    dnf install git wget -y
    ```
+   
 6. Change directory to `/tmp`:  
+   
    ```bash
    cd /tmp/
    ```
+   
 7. Download and extract Tomcat:  
+   
    ```bash
    wget https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.26/bin/apache-tomcat-10.1.26.tar.gz
    tar xzvf apache-tomcat-10.1.26.tar.gz
    ```
+   
 8. Create Tomcat user:  
+   
    ```bash
    useradd --home-dir /usr/local/tomcat --shell /sbin/nologin tomcat
    ```
+   
 9. Copy Tomcat files to home directory:  
+   
    ```bash
    cp -r /tmp/apache-tomcat-10.1.26/* /usr/local/tomcat/
    chown -R tomcat.tomcat /usr/local/tomcat
    ```
+   
 10. Create Tomcat service file:  
+   
     ```bash
     vi /etc/systemd/system/tomcat.service
     ```
+   
     - Add the provided service configuration  
+   
 11. Reload systemd and enable Tomcat:  
-    ```bash
+    
+   ```bash
     systemctl daemon-reload
     systemctl start tomcat
     systemctl enable tomcat
-    ```
+   ```
+   
 12. Configure firewall:  
-    ```bash
+    
+   ```bash
     systemctl start firewalld
     systemctl enable firewalld
     firewall-cmd --zone=public --add-port=8080/tcp --permanent
     firewall-cmd --reload
-    ```
+   ```
 
 #### **Code Build & Deployment**
 
 1. Install Maven:  
+   
    ```bash
    cd /tmp/
    wget https://archive.apache.org/dist/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.zip
@@ -412,20 +472,28 @@ vagrant ssh web01
    cp -r apache-maven-3.9.9 /usr/local/maven3.9
    export MAVEN_OPTS="-Xmx512m"
    ```
+   
 2. Download source code:  
+   
    ```bash
    git clone -b local https://github.com/hkhcoder/vprofile-project.git
    ```
+   
 3. Update configuration:  
+   
    ```bash
    cd vprofile-project
    vim src/main/resources/application.properties
    ```
+   
 4. Build the code:  
+   
    ```bash
    /usr/local/maven3.9/bin/mvn install
    ```
+   
 5. Deploy artifact:  
+   
    ```bash
    systemctl stop tomcat
    rm -rf /usr/local/tomcat/webapps/ROOT*
@@ -440,34 +508,47 @@ vagrant ssh web01
 ### **5. Nginx Setup**
 
 1. Login to the Nginx VM:  
+   
    ```bash
    vagrant ssh web01
    sudo -i
    ```
+   
 2. Verify and update `/etc/hosts` if necessary:  
+   
    ```bash
    cat /etc/hosts
    ```
+   
 3. Update OS with latest patches:  
+   
    ```bash
    apt update
    apt upgrade
    ```
+   
 4. Install Nginx:  
+   
    ```bash
    apt install nginx -y
    ```
+   
 5. Create Nginx configuration file:  
+   
    ```bash
    vi /etc/nginx/sites-available/vproapp
    ```
+   
    - Add the provided configuration  
 6. Activate Nginx site:  
+   
    ```bash
    rm -rf /etc/nginx/sites-enabled/default
    ln -s /etc/nginx/sites-available/vproapp /etc/nginx/sites-enabled/vproapp
    ```
+   
 7. Restart Nginx:  
+   
    ```bash
    systemctl restart nginx
    ```
@@ -477,8 +558,8 @@ vagrant ssh web01
 
 
 ## 🗑️ Cleaning Up Resources
-
 To remove all virtual machines and clean up resources, execute:
+
 ```bash
 $ vagrant destroy --force
 ```
@@ -486,7 +567,6 @@ $ vagrant destroy --force
 ---
 
 ## ✅ Conclusion
-
 In this project, we successfully set up a **multi-tier web application** using **Vagrant and VirtualBox**, provisioning various services like MySQL, Memcache, RabbitMQ, Tomcat, and Nginx. The architecture supports scalability and ensures efficient load management.
 
 ---
