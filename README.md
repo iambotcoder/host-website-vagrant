@@ -136,7 +136,7 @@ end
 ---
 
 
-# 🚀 Setup Instructions
+## 🚀 Setup Instructions
 
 #### 1️⃣ Install Dependencies
 
@@ -148,7 +148,7 @@ Ensure the following are installed:
 #### 2️⃣ Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/vagrant-setup.git
+git clone https://github.com/hkhcoder/vprofile-project.git
 cd vagrant-setup
 ```
 
