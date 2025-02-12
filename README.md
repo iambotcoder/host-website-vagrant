@@ -46,7 +46,164 @@ The provisioning process follows this sequence:
 5. **Nginx** (Web Service)
 
 ---
+### 📂 Repository Structure:
+```
+/vagrant-setup
+│── Vagrantfile
+│── README.md
+```
 
+---
+
+### 📜 **Vagrantfile**
+Create a file named **Vagrantfile** and add the following code:
+
+```ruby
+Vagrant.configure("2") do |config|
+  config.hostmanager.enabled = true 
+  config.hostmanager.manage_host = true
+
+  ### DB VM ###
+  config.vm.define "db01" do |db01|
+    db01.vm.box = "eurolinux-vagrant/centos-stream-9"
+    #db01.vm.box_version = "9.0.48"  # Commented to avoid installation errors
+    db01.vm.hostname = "db01"
+
+    # Port Forwarding
+    db01.vm.network "forwarded_port", guest: 22, host: 2222
+    db01.vm.network "private_network", ip: "192.168.56.15"
+    
+    db01.vm.provider "virtualbox" do |vb|
+      vb.memory = "600"
+    end
+  end
+
+  ### Memcache VM ###
+  config.vm.define "mc01" do |mc01|
+    mc01.vm.box = "eurolinux-vagrant/centos-stream-9"
+    #mc01.vm.box_version = "9.0.48"
+    mc01.vm.hostname = "mc01"
+
+    # Port Forwarding
+    mc01.vm.network "forwarded_port", guest: 22, host: 2207
+    mc01.vm.network "private_network", ip: "192.168.56.14"
+    
+    mc01.vm.provider "virtualbox" do |vb|
+      vb.memory = "600"
+    end
+  end
+
+  ### RabbitMQ VM ###
+  config.vm.define "rmq01" do |rmq01|
+    rmq01.vm.box = "eurolinux-vagrant/centos-stream-9"
+    #rmq01.vm.box_version = "9.0.48"
+    rmq01.vm.hostname = "rmq01"
+
+    # Port Forwarding
+    rmq01.vm.network "forwarded_port", guest: 22, host: 2204
+    rmq01.vm.network "private_network", ip: "192.168.56.13"
+
+    rmq01.vm.provider "virtualbox" do |vb|
+      vb.memory = "600"
+    end
+  end
+
+  ### Tomcat VM ###
+  config.vm.define "app01" do |app01|
+    app01.vm.box = "eurolinux-vagrant/centos-stream-9"
+    #app01.vm.box_version = "9.0.48"
+    app01.vm.hostname = "app01"
+
+    # Port Forwarding
+    app01.vm.network "forwarded_port", guest: 22, host: 2205
+    app01.vm.network "private_network", ip: "192.168.56.12"
+
+    app01.vm.provider "virtualbox" do |vb|
+      vb.memory = "800"
+    end
+  end
+
+  ### Nginx VM ###
+  config.vm.define "web01" do |web01|
+    web01.vm.box = "ubuntu/jammy64"
+    web01.vm.hostname = "web01"
+
+    # Port Forwarding
+    web01.vm.network "forwarded_port", guest: 22, host: 2206
+    web01.vm.network "private_network", ip: "192.168.56.11"
+
+    web01.vm.provider "virtualbox" do |vb|
+      # First provision with GUI enabled, then disable it after setup
+      # vb.gui = true  
+      vb.memory = "800"
+    end
+  end
+end
+```
+
+---
+
+### 📖 **README.md**
+Create a **README.md** file with setup instructions:
+
+```md
+# Vagrant Multi-VM Setup
+
+This project provides a **multi-VM** setup using **Vagrant** and **VirtualBox**. It provisions five virtual machines for different services:
+
+- **db01** → Database Server (CentOS Stream 9)
+- **mc01** → Memcached Server (CentOS Stream 9)
+- **rmq01** → RabbitMQ Server (CentOS Stream 9)
+- **app01** → Tomcat Application Server (CentOS Stream 9)
+- **web01** → Nginx Web Server (Ubuntu Jammy 64)
+
+## 🚀 Setup Instructions
+
+### 1️⃣ Install Dependencies
+Ensure the following are installed:
+
+- [Vagrant](https://www.vagrantup.com/)
+- [VirtualBox](https://www.virtualbox.org/)
+
+### 2️⃣ Clone the Repository
+```sh
+git clone https://github.com/your-username/vagrant-setup.git
+cd vagrant-setup
+```
+
+### 3️⃣ Provision the Virtual Machines
+Run the following command to start all VMs:
+```sh
+vagrant up
+```
+
+### 4️⃣ SSH into a Virtual Machine
+To access a specific VM, use:
+```sh
+vagrant ssh <vm-name>
+```
+For example:
+```sh
+vagrant ssh web01
+```
+
+### 5️⃣ Managing VMs
+- **Stop all VMs:** `vagrant halt`
+- **Restart all VMs:** `vagrant reload`
+- **Destroy all VMs:** `vagrant destroy`
+- **List running VMs:** `vagrant status`
+
+### 📝 Notes
+- **Nginx VM (`web01`) requires manual network configuration**:
+  1. **First Boot** → Enable `vb.gui = true` in `Vagrantfile`
+  2. Set up the network in VirtualBox:
+     - **Adapter 1:** NAT
+     - **Adapter 2:** Bridged Adapter
+  3. Once installed, disable the GUI (`vb.gui = false`) and run `vagrant reload`.
+
+
+
+---
 
 ### **1. MySQL Setup**  
 1. Login to the database VM:  
