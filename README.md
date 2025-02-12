@@ -596,6 +596,9 @@ vagrant ssh web01
 
 ---
 
+## 💻 Validate the project
+
+![Screenshot 2025-02-11 154427_](https://github.com/user-attachments/assets/ead538f1-39bc-42d1-bd2f-959f43de2863)
 
 
 ## 🗑️ Cleaning Up Resources
